@@ -1,20 +1,41 @@
 const express = require('express');
+const path = require('path')
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static('public'))
+
+app.get('/', (req, res) => {
+  res.render('index')
+})
+
+app.get('/form', (req, res) => {
+  res.render('form')
+})
+
+app.get('/create', (req, res) => {
+  console.log(req.body)
+  const user = {
+    name: req.body.name,
+    role: req.body.role
+  }
+  res.end(`Name: ${user.name}\nRole: ${user.role}`)
+})
+
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mtech2023', {useNewUrlParser: true}); // "userManagement" is the db name
+const dbURL = process.env.DB_URL || 'mongodb://localhost/mtech2023'
+mongoose.connect(dbURL); // "userManagement" is the db name
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  console.log('db connected');
+  console.log(`db connected: ${dbURL}`);
 });
 
 const userSchema = new mongoose.Schema({
-  name: String,
-  role: String,
+  name: {type: String, required: true},
+  role: {type: String, required: true},
   // age: { type: Number, min: 18, max: 70 },
   createdDate: { type: Date, default: Date.now }
 });

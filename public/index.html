@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script defer src="script.js"></script>
+  <title>Create User Page</title>
+</head>
+<body>
+  <h1>Hello People Around The World</h1>
+  <form action="/newUser" method="POST"></form>
+  <div>
+    <label for="name">Name: </label>
+    <input type="text" name="name" id="name" required>
+  </div>
+  <div>
+    <label for="role">Role: </label>
+    <input type="text" name="role" id="role" required>
+  </div>
+  <div>
+    <button onclick="addUser()">Add User</button>
+  </div>
+</body>
+</html>
